@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/preference_title">
+    <PreferenceCategory
+        android:title="@string/general_preference_category"
+        app:iconSpaceReserved="false"
+        >
+        <ListPreference
+            android:key="@string/key_dark_mode_preference"
+            android:defaultValue="MODE_NIGHT_FOLLOW_SYSTEM"
+            android:title="@string/theme_preference_title"
+            android:summary="@string/theme_preference_summary"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:key="@string/key_biometric_auth_preference"
+            app:title="@string/biometric_preference_title"
+            app:summary="@string/biometric_preference_summary"
+            app:iconSpaceReserved="false" />
+        />
+    </PreferenceCategory>
+</PreferenceScreen>

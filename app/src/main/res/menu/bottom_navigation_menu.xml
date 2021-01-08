@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_show_user_info"
+        android:enabled="true"
+        android:icon="@drawable/ic_face_18dp"
+        android:title="@string/user_navigation_entry"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings_black_18dp"
+        android:title="@string/settings_navigation_entry"
+        app:showAsAction="ifRoom" />
+</menu>

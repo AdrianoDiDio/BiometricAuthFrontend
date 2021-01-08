@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    android:layout_centerInParent="true"-->
+<!--    android:gravity="center"-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user_info_title"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="16dp"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/UserInfoId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_perm_identity_24px"
+            android:drawableTint="?colorAccent" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/UserInfoUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:drawableStart="@drawable/ic_face_18dp"
+            android:drawableTint="?colorAccent"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:layout_gravity="center" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/UserInfoEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:drawableStart="@drawable/ic_email_24px"
+            android:drawableTint="?colorAccent"
+            android:textSize="20sp"
+            android:paddingBottom="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/UserInfoRefreshButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/refresh_action"
+                android:layout_weight="1"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/UserInfoLogoutButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/logout_action"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/UserInfoProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+</RelativeLayout>

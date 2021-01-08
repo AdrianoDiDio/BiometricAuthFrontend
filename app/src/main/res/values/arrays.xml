@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_entries">
+        <item>@string/theme_values_follow_system_settings</item>
+        <item>@string/theme_values_use_light_theme</item>
+        <item>@string/theme_values_use_dark_theme</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>MODE_NIGHT_FOLLOW_SYSTEM</item>
+        <item>MODE_NIGHT_NO</item>
+        <item>MODE_NIGHT_YES</item>
+    </string-array>
+
+</resources>
