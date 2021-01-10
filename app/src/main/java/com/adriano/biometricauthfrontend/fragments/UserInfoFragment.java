@@ -41,6 +41,7 @@ public class UserInfoFragment extends Fragment implements UserInfoResponseCallba
         materialAlertDialogBuilder = new MaterialAlertDialogBuilder(getContext());
         materialAlertDialogBuilder.setTitle(R.string.session_end);
         materialAlertDialogBuilder.setMessage(message);
+        materialAlertDialogBuilder.setCancelable(false);
         materialAlertDialogBuilder.setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
             Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

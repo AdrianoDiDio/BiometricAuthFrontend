@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 pyAuthBackendRESTClient.logout(null);
-                MainActivity.super.onBackPressed();
+                finishAffinity();
             }
         });
         materialAlertDialogBuilder.setNegativeButton(android.R.string.no, (dialog, which) -> dialog.cancel());

@@ -17,6 +17,7 @@ import androidx.preference.SwitchPreferenceCompat;
 import com.adriano.biometricauthfrontend.R;
 import com.adriano.biometricauthfrontend.biometrics.BiometricAuthenticationCallbackAdapter;
 import com.adriano.biometricauthfrontend.biometrics.RSAKeyStoreManager;
+import com.adriano.biometricauthfrontend.biometrics.callbacks.BiometricAuthenticationFailed;
 import com.adriano.biometricauthfrontend.biometrics.callbacks.BiometricAuthenticationSucceded;
 import com.adriano.biometricauthfrontend.rest.callbacks.BiometricTokenResponseCallback;
 import com.adriano.biometricauthfrontend.rest.callbacks.EnrollBiometricAuthenticationPkCallback;
@@ -38,7 +39,7 @@ import timber.log.Timber;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener, EnrollBiometricAuthenticationPkCallback,
-        BiometricTokenResponseCallback, BiometricAuthenticationSucceded {
+        BiometricTokenResponseCallback, BiometricAuthenticationSucceded, BiometricAuthenticationFailed {
     private UserInfo userInfo;
     private SharedPreferences sharedPreferences;
     private PyAuthBackendRESTClient pyAuthBackendRESTClient;
@@ -55,12 +56,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         switchPreferenceCompat.setChecked(false);
         invalidateBiometricTokenSettings();
     }
+
+    @Override
+    public void onBiometricAuthenticationFailed(int errorCode, String message) {
+        if( errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON ||
+                errorCode == BiometricPrompt.ERROR_USER_CANCELED ||
+                errorCode == BiometricPrompt.ERROR_CANCELED) {
+            invalidateBiometricAuthenticationSettings();
+        }
+    }
+
     @Override
     public void onBiometricAuthenticationSucceeded(BiometricPrompt.AuthenticationResult authenticationResult,
                                                    Bundle bundle) {
         if( bundle == null ) {
             Timber.d("onBiometricAuthenticationSucceeded:Bundle is null");
-            findPreference("");
             invalidateBiometricAuthenticationSettings();
             return;
         }
@@ -118,6 +128,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         bundle.putString(BIOMETRIC_PUBLIC_KEY_BUNDLE_KEY,encodedPublicKey);
         biometricAuthenticationCallbackAdapter.registerBiometricAuthenticationSucceededCallback(
                 this,bundle);
+        biometricAuthenticationCallbackAdapter.registerBiometricAuthenticationFailedCallback(this);
         BiometricPrompt biometricPrompt = new BiometricPrompt(SettingsFragment.this, executor,
                 biometricAuthenticationCallbackAdapter);
         BiometricPrompt.PromptInfo biometricPromptInfo = BiometricUtils.buildBiometricPromptInfo(
