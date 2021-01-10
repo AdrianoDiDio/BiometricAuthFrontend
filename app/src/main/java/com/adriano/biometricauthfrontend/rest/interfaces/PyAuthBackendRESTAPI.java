@@ -18,7 +18,7 @@ public interface PyAuthBackendRESTAPI {
     @POST("login")
     @FormUrlEncoded
     Call<LoginPOJO> login(@Field("username") String username, @Field("password") String password);
-    @POST("login")
+    @POST("biometricLogin")
     @FormUrlEncoded
     Call<LoginPOJO> biometricLogin(@Field("userId") String userId,
                                    @Field("biometricToken") String biometricToken);
@@ -36,10 +36,10 @@ public interface PyAuthBackendRESTAPI {
     @FormUrlEncoded
     Call<BiometricTokenPOJO> getBiometricToken(@Field("serverBiometricChallenge") String serverBiometricChallenge,
                                                @Field("signedBiometricChallenge") String signedBiometricChallenge,
-                                               @Field("nonce") String nonce);
-    @POST("initBiometricAuthentication")
-    @FormUrlEncoded
-    Call<BiometricAuthenticationChallengePOJO> initBiometricAuthentication(@Field("publicKey") String publicKey);
+                                               @Field("nonce") String nonce,
+                                               @Field("publicKey") String publicKey);
+    @GET("getBiometricChallenge")
+    Call<BiometricAuthenticationChallengePOJO> getBiometricChallenge();
     @POST("logout")
     @FormUrlEncoded
     Call<Void> logout(@Field("refresh") String refreshToken);

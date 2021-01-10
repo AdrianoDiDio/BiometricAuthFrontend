@@ -45,6 +45,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     private RSAKeyStoreManager rsaKeyStoreManager;
     public static final String FRAGMENT_USER_INFO_BUNDLE_KEY = "UserInfoBundle";
     public static final String BIOMETRIC_CHALLENGE_BUNDLE_KEY = "BiometricChallengeBundle";
+    public static final String BIOMETRIC_PUBLIC_KEY_BUNDLE_KEY = "BiometricPublicKeyBundle";
 
     private void invalidateBiometricTokenSettings() {
         sharedPreferences.edit().putString(getString(R.string.key_biometric_user_info),"").apply();
@@ -66,6 +67,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         try {
             int nonce = new Random().nextInt();
             String serverBiometricChallenge = bundle.getString(BIOMETRIC_CHALLENGE_BUNDLE_KEY);
+            String publicKey = bundle.getString(BIOMETRIC_PUBLIC_KEY_BUNDLE_KEY);
             byte[] decodedChallenge = Base64.decode(serverBiometricChallenge.getBytes(),
                     Base64.DEFAULT | Base64.URL_SAFE);
             String signedChallenge = new String(decodedChallenge, StandardCharsets.UTF_8);
@@ -77,7 +79,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             String encodedSignedChallenge = Base64.encodeToString(outChallenge,
                     Base64.DEFAULT | Base64.URL_SAFE);
             pyAuthBackendRESTClient.getBiometricToken(serverBiometricChallenge,
-                    encodedSignedChallenge,String.valueOf(nonce), SettingsFragment.this);
+                    encodedSignedChallenge,String.valueOf(nonce),publicKey,
+                    SettingsFragment.this);
         } catch ( SignatureException e ) {
             e.printStackTrace();
         }
@@ -109,6 +112,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         biometricAuthenticationCallbackAdapter = new BiometricAuthenticationCallbackAdapter();
         Bundle bundle = new Bundle();
         bundle.putString(BIOMETRIC_CHALLENGE_BUNDLE_KEY,biometricChallenge);
+        String encodedPublicKey = Base64.encodeToString(rsaKeyStoreManager.getPublicKey().
+                        getEncoded(),
+                Base64.DEFAULT | Base64.URL_SAFE  | Base64.NO_WRAP);
+        bundle.putString(BIOMETRIC_PUBLIC_KEY_BUNDLE_KEY,encodedPublicKey);
         biometricAuthenticationCallbackAdapter.registerBiometricAuthenticationSucceededCallback(
                 this,bundle);
         BiometricPrompt biometricPrompt = new BiometricPrompt(SettingsFragment.this, executor,

@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public abstract class BaseNetworkResponse {
-    //TODO(Adriano):Make this an arraylist
     protected ArrayList<String> errorStrings;
     private int requestResponseCode;
 

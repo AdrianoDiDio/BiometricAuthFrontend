@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.adriano.biometricauthfrontend.BuildConfig;
 import com.adriano.biometricauthfrontend.rest.authenticators.RefreshTokenAuthenticator;
+import com.adriano.biometricauthfrontend.rest.callbacks.BiometricLoginResponseCallback;
 import com.adriano.biometricauthfrontend.rest.callbacks.BiometricTokenResponseCallback;
 import com.adriano.biometricauthfrontend.rest.callbacks.EnrollBiometricAuthenticationPkCallback;
 import com.adriano.biometricauthfrontend.rest.callbacks.LoginResponseCallback;
@@ -26,16 +27,12 @@ import com.adriano.biometricauthfrontend.rest.responses.LogoutResponse;
 import com.adriano.biometricauthfrontend.rest.responses.RegisterResponse;
 import com.adriano.biometricauthfrontend.rest.responses.UserInfoResponse;
 import com.adriano.biometricauthfrontend.users.UserInfo;
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -122,7 +119,7 @@ public class PyAuthBackendRESTClient {
             Timber.d("PyAuthBackendRESTClient:enrollBiometricAuthenticationPublicKey null response callback");
             return;
         }
-        enrollBiometricAuthenticationPkCall = pyAuthBackendRESTAPI.initBiometricAuthentication(publicKey);
+        enrollBiometricAuthenticationPkCall = pyAuthBackendRESTAPI.getBiometricChallenge();
         enrollBiometricAuthenticationPkCall.enqueue(new Callback<BiometricAuthenticationChallengePOJO>() {
             @Override
             public void onResponse(Call<BiometricAuthenticationChallengePOJO> call,
@@ -159,7 +156,7 @@ public class PyAuthBackendRESTClient {
     }
 
     public void getBiometricToken(String serverBiometricChallenge,String signedBiometricChallenge,
-                                  String nonce,
+                                  String nonce,String publicKey,
                                   final BiometricTokenResponseCallback biometricTokenResponseCallback) {
         Call<BiometricTokenPOJO> getBiometricTokenCall;
         if( biometricTokenResponseCallback == null ) {
@@ -167,7 +164,7 @@ public class PyAuthBackendRESTClient {
             return;
         }
         getBiometricTokenCall = pyAuthBackendRESTAPI.getBiometricToken(serverBiometricChallenge,
-                signedBiometricChallenge,nonce);
+                signedBiometricChallenge,nonce,publicKey);
         getBiometricTokenCall.enqueue(new Callback<BiometricTokenPOJO>() {
             @Override
             public void onResponse(Call<BiometricTokenPOJO> call, Response<BiometricTokenPOJO> response) {
@@ -326,10 +323,11 @@ public class PyAuthBackendRESTClient {
         });
     }
 
-    public void biometricLogin(String userId,String biometricToken, final LoginResponseCallback loginResponseCallback) {
+    public void biometricLogin(String userId,String biometricToken,
+                               final BiometricLoginResponseCallback biometricLoginResponseCallback) {
         Call<LoginPOJO> loginPOJOCall;
-        if( loginResponseCallback == null ) {
-            Timber.d("PyAuthBackendRESTClient:Login null response");
+        if( biometricLoginResponseCallback == null ) {
+            Timber.d("PyAuthBackendRESTClient:biometricLogin null response");
             return;
         }
         loginPOJOCall = pyAuthBackendRESTAPI.biometricLogin(userId,biometricToken);
@@ -348,7 +346,7 @@ public class PyAuthBackendRESTClient {
                         e.printStackTrace();
                     }
                 }
-                loginResponseCallback.onLoginResponseResult(loginResponse);
+                biometricLoginResponseCallback.onBiometricLoginResponseResult(loginResponse);
             }
 
             @Override
@@ -360,7 +358,7 @@ public class PyAuthBackendRESTClient {
                 }
                 LoginResponse loginResponse = new LoginResponse();
                 loginResponse.setRequestResponseCode(503);
-                loginResponseCallback.onLoginResponseResult(loginResponse);
+                biometricLoginResponseCallback.onBiometricLoginResponseResult(loginResponse);
             }
         });
     }

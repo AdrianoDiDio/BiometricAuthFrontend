@@ -25,6 +25,7 @@ import com.adriano.biometricauthfrontend.biometrics.BiometricAuthenticationCallb
 import com.adriano.biometricauthfrontend.biometrics.RSAKeyStoreManager;
 import com.adriano.biometricauthfrontend.biometrics.callbacks.BiometricAuthenticationFailed;
 import com.adriano.biometricauthfrontend.biometrics.callbacks.BiometricAuthenticationSucceded;
+import com.adriano.biometricauthfrontend.rest.callbacks.BiometricLoginResponseCallback;
 import com.adriano.biometricauthfrontend.utils.BiometricUtils;
 import com.adriano.biometricauthfrontend.utils.Utils;
 import com.adriano.biometricauthfrontend.activities.MainActivity;
@@ -45,7 +46,8 @@ import javax.crypto.IllegalBlockSizeException;
 import timber.log.Timber;
 
 public class LoginFragment extends Fragment implements View.OnClickListener,
-        TextView.OnEditorActionListener, LoginResponseCallback, BiometricAuthenticationSucceded,
+        TextView.OnEditorActionListener, LoginResponseCallback, BiometricLoginResponseCallback,
+        BiometricAuthenticationSucceded,
         BiometricAuthenticationFailed {
     private TextInputLayout usernameTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
@@ -66,6 +68,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener,
         biometricLoginButton.setVisibility(View.GONE);
         Utils.setProgressBarVisibility(progressBar,getActivity(),false);
     }
+
+    private void onLoginSucceded(LoginResponse loginResponse) {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        UserInfo userInfo = new UserInfo(loginResponse.getAuthToken(), loginResponse.getRefreshToken(),
+                loginResponse.getUserID());
+        String userId = sharedPreferences.getString(
+                getString(R.string.key_biometric_user_info),"");
+        if( !String.valueOf(userInfo.getUserID()).equals(userId) ) {
+            Timber.d("Invalidating since enroll was done for another user...");
+            invalidateBiometricPreferences();
+        }
+        intent.putExtra(MainActivity.USER_INFO_INTENT_KEY,userInfo);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     @Override
     public void onLoginResponseResult(LoginResponse loginResponse) {
         Utils.setProgressBarVisibility(progressBar,getActivity(),false);
@@ -78,19 +96,23 @@ public class LoginFragment extends Fragment implements View.OnClickListener,
             }
         } else {
             autofillManager.commit();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            UserInfo userInfo = new UserInfo(loginResponse.getAuthToken(), loginResponse.getRefreshToken(),
-                    loginResponse.getUserID());
-            String userId = sharedPreferences.getString(
-                    getString(R.string.key_biometric_user_info),"");
-            if( !String.valueOf(userInfo.getUserID()).equals(userId) ) {
-                Timber.d("Invalidating since enroll was done for another user...");
-                invalidateBiometricPreferences();
-            }
-            intent.putExtra(MainActivity.USER_INFO_INTENT_KEY,userInfo);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            onLoginSucceded(loginResponse);
+        }
+    }
 
+    @Override
+    public void onBiometricLoginResponseResult(LoginResponse loginResponse) {
+        Utils.setProgressBarVisibility(progressBar,getActivity(),false);
+
+        if( loginResponse.getRequestResponseCode() != 200 ) {
+            if( loginResponse.getRequestResponseCode() == 401 ) {
+                invalidateBiometricPreferences();
+                Utils.displayWarningDialog(getString(R.string.corrupted_biometric_token),getContext());
+            } else {
+                Utils.displayWarningDialog(getString(R.string.server_unreachable_error),getContext());
+            }
+        } else {
+            onLoginSucceded(loginResponse);
         }
     }
 
