@@ -36,7 +36,6 @@ import com.adriano.biometricauthfrontend.users.UserInfo;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
 
 import javax.crypto.BadPaddingException;
@@ -73,8 +72,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener,
         Intent intent = new Intent(getActivity(), MainActivity.class);
         UserInfo userInfo = new UserInfo(loginResponse.getAuthToken(), loginResponse.getRefreshToken(),
                 loginResponse.getUserID());
-        String userId = sharedPreferences.getString(
-                getString(R.string.key_biometric_user_info),"");
+        int userId = sharedPreferences.getInt(
+                getString(R.string.key_biometric_user_id),0);
         if( !String.valueOf(userInfo.getUserID()).equals(userId) ) {
             Timber.d("Invalidating since enroll was done for another user...");
             invalidateBiometricPreferences();
@@ -133,8 +132,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener,
 
             String biometricToken = sharedPreferences.getString(
                     getString(R.string.key_biometric_token),"");
-            String userId = sharedPreferences.getString(
-                    getString(R.string.key_biometric_user_info),"");
+            int userId = sharedPreferences.getInt(
+                    getString(R.string.key_biometric_user_id),0);
 
             decodedBiometricToken = Utils.decodeBase64(biometricToken);
             decryptedBiometricToken = authenticationResult.getCryptoObject().getCipher().

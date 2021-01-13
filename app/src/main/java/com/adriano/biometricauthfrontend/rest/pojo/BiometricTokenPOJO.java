@@ -9,7 +9,7 @@ public class BiometricTokenPOJO {
     private String biometricToken;
     @SerializedName("userId")
     @Expose
-    private String userId;
+    private int userId;
 
     public String getBiometricToken() {
         return biometricToken;
@@ -19,11 +19,11 @@ public class BiometricTokenPOJO {
         this.biometricToken = biometricToken;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 }

@@ -4,7 +4,7 @@
     tools:ignore="MissingTranslation" >
     <string name="key_dark_mode_preference" translatable="false">dark_mode_preference</string>
     <string name="key_biometric_auth_preference" translatable="false">biometric_auth_preference</string>
-    <string name="key_biometric_user_info" translatable="false">biometric_token</string>
-    <string name="key_biometric_token" translatable="false">biometric_user_id</string>
+    <string name="key_biometric_user_id" translatable="false">biometric_user_id</string>
+    <string name="key_biometric_token" translatable="false">biometric_token</string>
 
 </resources>

@@ -2,13 +2,13 @@ package com.adriano.biometricauthfrontend.rest.responses;
 
 public class BiometricTokenResponse extends BaseNetworkResponse {
     private String biometricToken;
-    private String userId;
+    private int userId;
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -22,6 +22,6 @@ public class BiometricTokenResponse extends BaseNetworkResponse {
 
     public BiometricTokenResponse() {
         biometricToken = "";
-        userId = "";
+        userId = 0;
     }
 }

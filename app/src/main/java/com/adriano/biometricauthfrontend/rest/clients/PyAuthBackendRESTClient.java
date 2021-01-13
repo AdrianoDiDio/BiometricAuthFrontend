@@ -156,7 +156,7 @@ public class PyAuthBackendRESTClient {
     }
 
     public void getBiometricToken(String serverBiometricChallenge,String signedBiometricChallenge,
-                                  String nonce,String publicKey,
+                                  int nonce,String publicKey,
                                   final BiometricTokenResponseCallback biometricTokenResponseCallback) {
         Call<BiometricTokenPOJO> getBiometricTokenCall;
         if( biometricTokenResponseCallback == null ) {
@@ -323,7 +323,7 @@ public class PyAuthBackendRESTClient {
         });
     }
 
-    public void biometricLogin(String userId,String biometricToken,
+    public void biometricLogin(int userId,String biometricToken,
                                final BiometricLoginResponseCallback biometricLoginResponseCallback) {
         Call<LoginPOJO> loginPOJOCall;
         if( biometricLoginResponseCallback == null ) {

@@ -49,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String BIOMETRIC_PUBLIC_KEY_BUNDLE_KEY = "BiometricPublicKeyBundle";
 
     private void invalidateBiometricTokenSettings() {
-        sharedPreferences.edit().putString(getString(R.string.key_biometric_user_info),"").apply();
+        sharedPreferences.edit().putString(getString(R.string.key_biometric_user_id),"").apply();
     }
     private void invalidateBiometricAuthenticationSettings() {
         SwitchPreferenceCompat switchPreferenceCompat = findPreference(getString(R.string.key_biometric_auth_preference));
@@ -89,7 +89,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             String encodedSignedChallenge = Base64.encodeToString(outChallenge,
                     Base64.DEFAULT | Base64.URL_SAFE);
             pyAuthBackendRESTClient.getBiometricToken(serverBiometricChallenge,
-                    encodedSignedChallenge,String.valueOf(nonce),publicKey,
+                    encodedSignedChallenge,nonce,publicKey,
                     SettingsFragment.this);
         } catch ( SignatureException e ) {
             e.printStackTrace();
@@ -102,7 +102,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if( biometricResponse.getRequestResponseCode() == 201 ) {
             sharedPreferences.edit().putString(getString(R.string.key_biometric_token),
                         biometricResponse.getBiometricToken()).apply();
-            sharedPreferences.edit().putString(getString(R.string.key_biometric_user_info),
+            sharedPreferences.edit().putInt(getString(R.string.key_biometric_user_id),
                     biometricResponse.getUserId()).apply();
             Utils.displayInfoDialog(getString(R.string.biometric_enroll_complete),getContext());
         } else {
