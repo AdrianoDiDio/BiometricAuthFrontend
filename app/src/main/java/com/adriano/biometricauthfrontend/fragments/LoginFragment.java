@@ -74,7 +74,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener,
                 loginResponse.getUserID());
         int userId = sharedPreferences.getInt(
                 getString(R.string.key_biometric_user_id),0);
-        if( !String.valueOf(userInfo.getUserID()).equals(userId) ) {
+
+        if( userInfo.getUserID() != userId ) {
             Timber.d("Invalidating since enroll was done for another user...");
             invalidateBiometricPreferences();
         }
