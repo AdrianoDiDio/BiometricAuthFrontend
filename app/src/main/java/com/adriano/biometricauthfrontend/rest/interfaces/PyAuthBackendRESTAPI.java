@@ -34,8 +34,7 @@ public interface PyAuthBackendRESTAPI {
 
     @POST("getBiometricToken")
     @FormUrlEncoded
-    Call<BiometricTokenPOJO> getBiometricToken(@Field("serverBiometricChallenge") String serverBiometricChallenge,
-                                               @Field("signedBiometricChallenge") String signedBiometricChallenge,
+    Call<BiometricTokenPOJO> getBiometricToken(@Field("signedBiometricChallenge") String signedBiometricChallenge,
                                                @Field("nonce") Integer nonce,
                                                @Field("publicKey") String publicKey);
     @GET("getBiometricChallenge")

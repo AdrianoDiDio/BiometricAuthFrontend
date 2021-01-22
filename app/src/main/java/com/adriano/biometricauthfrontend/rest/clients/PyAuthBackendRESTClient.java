@@ -111,8 +111,7 @@ public class PyAuthBackendRESTClient {
         });
     }
 
-    public void enrollBiometricAuthenticationPk(String publicKey,
-                                                final EnrollBiometricAuthenticationPkCallback
+    public void enrollBiometricAuthenticationPk(final EnrollBiometricAuthenticationPkCallback
                                                                enrollBiometricAuthenticationPkCallback) {
         Call<BiometricAuthenticationChallengePOJO> enrollBiometricAuthenticationPkCall;
         if( enrollBiometricAuthenticationPkCallback == null ) {
@@ -155,7 +154,7 @@ public class PyAuthBackendRESTClient {
         });
     }
 
-    public void getBiometricToken(String serverBiometricChallenge,String signedBiometricChallenge,
+    public void getBiometricToken(String signedBiometricChallenge,
                                   int nonce,String publicKey,
                                   final BiometricTokenResponseCallback biometricTokenResponseCallback) {
         Call<BiometricTokenPOJO> getBiometricTokenCall;
@@ -163,8 +162,8 @@ public class PyAuthBackendRESTClient {
             Timber.d("PyAuthBackendRESTClient:getBiometricToken null response callback");
             return;
         }
-        getBiometricTokenCall = pyAuthBackendRESTAPI.getBiometricToken(serverBiometricChallenge,
-                signedBiometricChallenge,nonce,publicKey);
+        getBiometricTokenCall = pyAuthBackendRESTAPI.getBiometricToken(signedBiometricChallenge,
+                nonce,publicKey);
         getBiometricTokenCall.enqueue(new Callback<BiometricTokenPOJO>() {
             @Override
             public void onResponse(Call<BiometricTokenPOJO> call, Response<BiometricTokenPOJO> response) {

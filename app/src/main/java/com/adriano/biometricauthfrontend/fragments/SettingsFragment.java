@@ -88,8 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             byte[] outChallenge = signature.sign();
             String encodedSignedChallenge = Base64.encodeToString(outChallenge,
                     Base64.DEFAULT | Base64.URL_SAFE);
-            pyAuthBackendRESTClient.getBiometricToken(serverBiometricChallenge,
-                    encodedSignedChallenge,nonce,publicKey,
+            pyAuthBackendRESTClient.getBiometricToken(encodedSignedChallenge,nonce,publicKey,
                     SettingsFragment.this);
         } catch ( SignatureException e ) {
             e.printStackTrace();
@@ -178,8 +177,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         PublicKey publicKey = rsaKeyStoreManager.getPublicKey();
         String encodedPublicKey = Base64.encodeToString(publicKey.getEncoded(),
                     Base64.DEFAULT | Base64.URL_SAFE  | Base64.NO_WRAP);
-        pyAuthBackendRESTClient.enrollBiometricAuthenticationPk(encodedPublicKey,
-                this);
+        pyAuthBackendRESTClient.enrollBiometricAuthenticationPk(this);
     }
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
