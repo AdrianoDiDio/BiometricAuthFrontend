@@ -1,4 +1,5 @@
 * [BiometricAuthFrontend](#biometricauthfrontend)
+* [Setup](#setup)
 * [Installation](#installation)
 * [User Guide](#user-guide)
    * [Registration](#registration)
@@ -17,9 +18,48 @@
    * [Biometric Login Flow](#biometric-login-flow)
 
 
+
 # BiometricAuthFrontend
 Demo Android application to show biometric authentication using PyAuthBackend.
 
+Setup
+=====
+Application is configured to connect to a specific URL specified in
+the file:
+```
+app/src/main/java/com/adriano/biometricauthfrontend/rest/clients/
+PyAuthBackendRESTClient
+```
+Using the variable:
+```java
+private static final String BASE_URL = "https://
+                            adrianodd.pythonanywhere.com/api/";
+
+```
+By default, it will connect to this site which has a valid
+SSL certificate and the application will work without any
+problem.
+If the server is ran without a certificate or has a self-signed
+certificate, Android will block any attempt to connect to it.
+In order to workaround this issue the Manifest file must be
+modified by adding the following line:
+```xml
+android:networkSecurityConfig="@xml/network_security_config"
+```
+Then the file network_security_config,found at res/xml/
+must be updated with the following data:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config><base-config cleartextTrafficPermitted="true" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">
+          Ip-Address Of the Server
+        </domain>
+    </domain-config>
+</network-security-config>
+```
+this will force application to connect trough http without
+any complaint from the system network policy.
 
 Installation
 ============
@@ -27,6 +67,7 @@ You can either install it using AndroidStudio by setting the
 phone/emulator in debug mode and running directly from there or
 you can use the self-signed apk found in the app/release folder by
 copying directly to your phone and installing from there.
+**NOTE that built APK uses a default URL which is available online at: [adrianodd.pythonanywhere.com](https://adrianodd.pythonanywhere.com)**
 
 User Guide
 ==========
