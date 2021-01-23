@@ -49,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     public static final String BIOMETRIC_PUBLIC_KEY_BUNDLE_KEY = "BiometricPublicKeyBundle";
 
     private void invalidateBiometricTokenSettings() {
-        sharedPreferences.edit().putString(getString(R.string.key_biometric_user_id),"").apply();
+        sharedPreferences.edit().putInt(getString(R.string.key_biometric_user_id),0).apply();
     }
     private void invalidateBiometricAuthenticationSettings() {
         SwitchPreferenceCompat switchPreferenceCompat = findPreference(getString(R.string.key_biometric_auth_preference));
