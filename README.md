@@ -75,8 +75,7 @@ User Guide
 After installing it for the first time, user will be presented by the main
 fragment asking either to login or register a new account:
 <p align="center">
-    <img src="./images/ui/main_ui_no_biometric_login.jpg" alt="Main UI"
-         style="max-width: 100px; height: auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_no_biometric_login.jpg" alt="Main UI">
     <br>
     <em>Main UI</em>
 </p>
@@ -86,8 +85,7 @@ Registration
 If the user wants to register a new account then the
 following screen is shown asking to input all the details:
 <p align="center">
-    <img src="./images/ui/main_ui_registration.jpg" alt="Main UI"
-         style="max-width: 100px; height: auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_registration.jpg" alt="Main UI">
     <br>
     <em>Registration</em>
 </p>
@@ -96,8 +94,7 @@ If one of the required fields is empty or not valid, it will show a
 warning error as seen below:
 
 <p align="center">
-    <img src="./images/ui/main_ui_registration_validator.jpg" alt="Main UI"
-         style="max-width: 100px; height: auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_registration_validator.jpg" alt="Main UI">
     <br>
     <em>Registration Errors</em>
 </p>
@@ -107,8 +104,7 @@ already exists, when clicking register, server will return an error code
 as seen below:
 
 <p align="center">
-    <img src="./images/ui/main_ui_registration_server_side_validator.jpg"
-    alt="Main UI" style="max-width: 100px; height: auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_registration_server_side_validator.jpg">
     <br>
     <em>Registration Server errors</em>
 </p>
@@ -116,8 +112,7 @@ as seen below:
 If, instead, fields are valid it will show the following dialog:
 
 <p align="center">
-    <img src="./images/ui/main_ui_registration_ok.jpg"
-    alt="Main UI" style="max-width: 100px; height: auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_registration_ok.jpg">
     <br>
     <em>Registration Succeded</em>
 </p>
@@ -136,9 +131,7 @@ Biometric Login is enabled only after a successful enrollment has been
 done in the settings and it is a simple button in the Main UI:
 
 <p align="center">
-    <img src="./images/ui/main_ui_biometric_login.jpg"
-    alt="Main UI with Biometric Login" style="max-width: 100px; height:
-    auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_biometric_login.jpg">
     <br>
     <em>Biometric Login</em>
 </p>
@@ -147,9 +140,8 @@ After pressing the button user will be asked to confirm his identity with
 a standard Android dialog:
 
 <p align="center">
-    <img src="./images/ui/main_ui_biometric_login_fingerprint.jpg"
-    alt="Main UI with Fingerprint Login" style="max-width: 100px; height:
-    auto;" align="center">
+    <img width=200px height=auto src="./images/ui/main_ui_biometric_login_fingerprint.jpg"
+    alt="Main UI with Fingerprint Login">
     <br>
     <em>Fingerprint Login</em>
 </p>
@@ -167,9 +159,8 @@ In this activity user can see his own information,refresh it or logout
 as seen in the following picture:
 
 <p align="center">
-    <img src="./images/ui/user_info_ui_main.jpg"
-    alt="Main UI with user's details" style="max-width: 100px; height:
-    auto;" align="center">
+    <img width=200px height=auto src="./images/ui/user_info_ui_main.jpg"
+    alt="Main UI with user's details">
     <br>
     <em>Main User Area</em>
 </p>
@@ -179,9 +170,7 @@ information and the application's settings:
 
 
 <p align="center">
-    <img src="./images/ui/user_info_ui_settings.jpg"
-    alt="Application's Settings" style="max-width: 100px; height:
-    auto;" align="center">
+    <img width=200px height=auto src="./images/ui/user_info_ui_settings.jpg" alt="Application's Settings" >
     <br>
     <em>Application's Settings</em>
 </p>
@@ -200,9 +189,7 @@ This button will let the user close his own session by clearing out
 all the personal data that were received upon login:
 
 <p align="center">
-    <img src="./images/ui/user_info_ui_logout_ok.jpg"
-    alt="Logout"
-    style="max-width: 100px; height:auto;" align="center">
+    <img width=200px height=auto src="./images/ui/user_info_ui_logout_ok.jpg" alt="Logout">
     <br>
     <em>Logout</em>
 </p>
@@ -214,9 +201,8 @@ authenticate itself using the standard ui dialog as seen in
 the [biometric login](#biometric-login):
 
 <p align="center">
-    <img src="./images/ui/user_info_ui_biometrics_enrollment.jpg"
-    alt="Biometrics Enrollment Authentication"
-    style="max-width: 100px; height:auto;" align="center">
+    <img width=200px height=auto src="./images/ui/user_info_ui_biometrics_enrollment.jpg"
+    alt="Biometrics Enrollment Authentication">
     <br>
     <em>Biometrics Enrollment Authentication</em>
 </p>
@@ -227,9 +213,8 @@ If the process went well user will be informed with the following
 dialog:
 
 <p align="center">
-    <img src="./images/ui/user_info_ui_biometrics_enrollment_ok.jpg"
-    alt="Biometrics Enrollment Succeded"
-    style="max-width: 100px; height:auto;" align="center">
+    <img width=200px height=auto src="./images/ui/user_info_ui_biometrics_enrollment_ok.jpg"
+    alt="Biometrics Enrollment Succeded">
     <br>
     <em>Biometrics Enrollment Succeded</em>
 </p>
@@ -403,9 +388,8 @@ application's preferences file along with the UserId.
 An overall schema of the whole process is shown below:
 
 <p align="center">
-    <img src="./images/ui/biometric_enrollment_protocol.jpg"
-    alt="Biometrics Enrollment Protocol"
-    style="max-width: 300px; height:auto;" align="center">
+    <img width=200px height=auto src="./images/ui/biometric_enrollment_protocol.jpg"
+    alt="Biometrics Enrollment Protocol">
     <br>
     <em>Biometrics Enrollment Protocol</em>
 </p>
