@@ -34,8 +34,8 @@ Using the variable:
 ```java
 private static final String BASE_URL = "https://
                             adrianodd.pythonanywhere.com/api/";
-
 ```
+
 By default, it will connect to this site which has a valid
 SSL certificate and the application will work without any
 problem.
